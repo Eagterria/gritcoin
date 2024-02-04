@@ -7,6 +7,7 @@
 
 import json
 import time
+import random
 
 def main():
     try:
@@ -21,17 +22,16 @@ def main():
 
         # Things people typically either enjoy doing or require in order to function.
         # Each item increases in price by 1 each time it is bought.
-        # Feel free to add/remove items as needed in order to ensure maximum personalization.
         stats['sell'] = {}
         stats['sell']['Go to a website/link'] = 1
         stats['sell']['Refresh a website'] = 1
         stats['sell']['Close a website'] = 1
         stats['sell']['Play/replay one song/video'] = 1
         stats['sell']['Stop a song/video early'] = 1 # Pausing/seeking is fine.
-        stats['sell']['Turn on a device'] = 1 # Turning on your main device that runs this program is free, for obvious reasons.
+        stats['sell']['Turn on a device'] = 1 # Turning on your main device that runs the gritcoin program is free, for obvious reasons.
         stats['sell']['Turn off a device'] = 1
         stats['sell']['Save an unsaved file'] = 1
-        stats['sell']['Open an app or program'] = 1 # Opening this specific program is free, for obvious reasons.
+        stats['sell']['Open an app or program'] = 1 # Opening the gritcoin program is free, for obvious reasons.
         stats['sell']['Close an app or program'] = 1
         stats['sell']['Take medicine'] = 1
         stats['sell']['Drink water'] = 1
@@ -43,16 +43,16 @@ def main():
         stats['sell']['Use the bathroom'] = 1
 
         # Things like doing overtime, finishing a project, exercise/dieting, getting a job, doing work in class, studying, self-care, meditation, etc.
-        # This is a fixed rate so that as prices increase, spamming enter won't be enough anymore, forcing you to do easy tasks instead.
+        # This is a fixed rate so that as prices increase, pressing keys to get gritcoin won't be enough anymore, forcing you to do easy tasks instead.
         # Soon easy tasks won't be enough, and then medium tasks won't be enough, and then hard tasks won't be enough.
         # You can probably stop using this program when hard or extreme tasks are no longer enough, as you may not want to overwork yourself too much.
         # Note: The higher these numbers are, the more gradual the difficulty increases over time, and thus the longer it will take for the user to get better.
         # Note: Feel free to change these numbers as needed in order to ensure maximum personalization.
         stats['buy'] = {}
-        stats['buy']['Easy accomplishment'] = 10000
-        stats['buy']['Medium accomplishment'] = 100000
-        stats['buy']['Hard accomplishment'] = 1000000
-        stats['buy']['Extreme accomplishment'] = 10000000
+        stats['buy']['Easy accomplishment'] = 1000
+        stats['buy']['Medium accomplishment'] = 10000
+        stats['buy']['Hard accomplishment'] = 100000
+        stats['buy']['Extreme accomplishment'] = 1000000
 
         with open('gritcoin.json', 'w') as f:
             json.dump(stats, f)
@@ -60,8 +60,10 @@ def main():
         print("Remember, this is a long-term commitment you have to make, no matter how hard it gets. The more you put into this, the more you'll get out of it.")
 
     while True:
+        key = random.choice('a b c d e f g h i j k l m n o p q r s t u v w x y z'.split(' '))
+
         # Main interface
-        print(f'Current balance: {stats["coins"]} gritcoin(s). Type "store" for things you can do/buy, or "accomplishments" for a list of your accomplishments. Otherwise press Enter to earn 1 gritcoin. ')
+        print(f'Current balance: {stats["coins"]} gritcoin(s). Type "store" for things you can do/buy, or "accomplishments" for a list of your accomplishments. Otherwise press "{key}" to earn 1 gritcoin. ')
 
         try:
             line = input('> ')
@@ -89,24 +91,21 @@ def main():
 
             for accomplishment in stats['accomplishments']:
                 print(accomplishment)
-        elif len(line) > 0:
-            # Make a payment or receive a reward.
-
-            if line in stats['sell']:
-                if stats['coins'] >= stats['sell'][line]:
-                    stats['coins'] -= stats['sell'][line]
-                    stats['sell'][line] += 1 # Price increases for every purchase
-                else:
-                    print('Insufficient funds.')
-            elif line in stats['buy']:
-                accomplishment = input('What did you accomplish? ')
-                stats['accomplishments'].append(f'{time.ctime(time.time())}: {line}: "{accomplishment}"')
-                stats['coins'] += stats['buy'][line]
-            else:
-                print('Unknown input.')
-        else:
-            # Gain gritcoins by pressing Enter. For hard mode, don't hold the enter key as this might make things a lot easier.
+        elif line == key:
+            # Earn 1 gritcoin for typing the correct key. (Avoids automation to an extent)
             stats['coins'] += 1
+        elif line in stats['sell']:
+            if stats['coins'] >= stats['sell'][line]:
+                stats['coins'] -= stats['sell'][line]
+                stats['sell'][line] += 1 # Price increases for every purchase
+            else:
+                print('Insufficient funds.')
+        elif line in stats['buy']:
+            accomplishment = input('What did you accomplish? ')
+            stats['accomplishments'].append(f'{time.ctime(time.time())}: {line}: "{accomplishment}"')
+            stats['coins'] += stats['buy'][line]
+        else:
+            print('Unknown input.')
 
         # Save system to a file.
         with open('gritcoin.json', 'w') as f:
