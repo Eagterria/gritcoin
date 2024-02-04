@@ -8,7 +8,7 @@ Python 3.x
 
 ## Usage
 
-This program takes zero arguments. Once ran, you are dropped into a basic command-line shell. Pressing enter will earn you 1 gritcoin, and at first, it is the easiest way to earn gritcoins. Typing "store" will show you all of the purchases you can make and the various levels of accomplishment that you can trade for extra gritcoins. Typing "accomplishments" will list all of the things that you have accomplished since using the program. Typing the exact name of any list element from the store will either purchase something or exchange an accomplishment for gritcoins.
+This program takes zero arguments. Once ran, you are dropped into a basic command-line shell. Pressing the letter shown above the prompt, followed by enter, will earn you 1 gritcoin. At first, it is the easiest way to earn gritcoins. Typing "store" will show you all of the purchases you can make and the various levels of accomplishment that you can trade for extra gritcoins. Typing "accomplishments" will list all of the things that you have accomplished since using the program. Typing the exact name of any list element from the store will either purchase something or exchange an accomplishment for gritcoins.
 
 ## Store
 
